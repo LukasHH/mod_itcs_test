@@ -1,72 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="3.1" client="administrator" method="upgrade">
-	<name>mod_itcs_test</name>
-	<author>Joomla! Project</author>
-	<creationDate>July 2004</creationDate>
-	<copyright>Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<authorEmail>admin@joomla.org</authorEmail>
-	<authorUrl>www.joomla.org</authorUrl>
-	<version>3.0.0</version>
-	<description>Das ist ein Test-Modul</description>
-
+<extension type="module" version="4.*" client="site" method="upgrade">
+	<name>itcs Test</name>
+	<author>it-conserv.de</author>
+	<creationDate>Nov 2021</creationDate>
+	<copyright>Copyright (C) 2021 it-conserv.de. All rights reserved.</copyright>
+	<license>PHP files are licensed under GNU/GPL V3</license>
+	<authorEmail>info@it-conserv.de</authorEmail>
+	<authorUrl>www.it-conserv.de</authorUrl>
+	<version>1.1.0</version>
+	<description>
+	<![CDATA[
+	<div class="alert alert-success container" style="background-color:#DFF0D8;border-color:#D6E9C6; color: #468847;padding: 1px 10px;">
+		<div class="row justify-content-lg-center">
+			<div class="col col-md-10 span10 offset1"  align="center">
+				<h2 style="color: #f39c12;">Open hours</h2>
+				<h4>Show your open hours in a stylish modul</h4>
+				<p> </p>
+				<p>This modul is created without javascript and the animation is only in CSS.<br />The calculation of the times is based on PHP. You can set your own time zone for each module.</p>
+			</div>
+			<div class="col col-md-4 span4 offset4">
+				<h5 align="center" style="color: #f39c12;">See the new Pro Version</h5>
+				<p align="center">Additional functions and features</p>
+				<ul>
+					<li>two different times per day</li>
+					<li>separate times on specified days (e.g. holidays)</li>
+					<li>own colors</li>
+					<li>Display your shop name</li>
+					<li>Structured Data</li>
+				</ul>
+			</div>
+			<div class="col col-md-10 span10 offset1"  align="center">
+				<p>The css-script is a free resource from <a href="http://www.littlesnippets.net" title="littlesnippets.net" target="_blank">http://www.littlesnippets.net</a></p>
+				<p>Copyright 2021 <a href="http://www.it-conserv.de/" title="it-conserv.de" target="_blank">www.it-conserv.de</a>.</p>
+			</div>								
+		</div>
+	</div>
+	]]>		
+	</description>
+	<namespace>ITCS\Module\ItcsTest</namespace>
+	<languages>
+		<language tag="en-GB">language/en-GB/mod_itcs_test.ini</language>
+		<language tag="de-DE">language/de-DE/mod_itcs_test.ini</language>
+	</languages>	
 	<files>
 		<filename module="mod_itcs_test">mod_itcs_test.php</filename>
+		<filename>ItcsTestHelper.php</filename>
+		<filename>script.php</filename>
+		<filename>index.html</filename>
+		<filename>lizenz_gpl.txt</filename>		
+		<folder>language</folder>
 		<folder>tmpl</folder>
+		<folder>assets</folder>
 	</files>
-	<languages>
-		<language tag="en-GB">en-GB.mod_itcs_test.ini</language>
-		<language tag="en-GB">en-GB.mod_itcs_test.sys.ini</language>
-	</languages>
-
-	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_CUSTOM_HTML" />
+	<scriptfile>script.php</scriptfile>
+	<updateservers>
+		<server type="extension" priority="2" name="Modul itcs Test">
+			https://it-conserv.de/phocadownload/module/mod_itcs_test/mod_itcs_test-update.xml
+		</server>
+	</updateservers>
+	<changelogurl>https://it-conserv.de/phocadownload/module/mod_itcs_test/mod_itcs_test-changelog.xml</changelogurl>
 	<config>
-		<fields name="params">
+		<fields name="params"  addfieldpath="/modules/mod_itcs_test/assets/elements">
 			<fieldset name="GENERAL_SETTINGS">
-				<field type="spacer" name="ifp_basic_settings" label="Lizenz Check" />
-				<field name="itcs_license" type="text" label="ITCS_LICENSE" description="ITCS_LICENSE_DESC" size="30" required="true"/>
+				<field type="itcsdonation" />
+				<field type="spacer" name="basic_settings" label="BASIC_SETTINGS" />
+				<field name="test_text" type="text" default="Default-Text" label="Text" description="Text Beschreibung" />
+				<field name="tz_show" type="switcher" class="btn-group" default="0" label="OH_SHOW_TIME" description="OH_SHOW_TIME_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
 			</fieldset>
-			<fieldset name="advanced">
+			<fieldset name="zusatz">
 				<field
-					name="layout"
-					type="modulelayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					description="JFIELD_ALT_MODULE_LAYOUT_DESC"
-				/>
-
-				<field
-					name="moduleclass_sfx"
-					type="textarea"
-					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"
-					rows="3"
-				/>
-
-				<field
-					name="cache"
-					type="list"
-					label="COM_MODULES_FIELD_CACHING_LABEL"
-					description="COM_MODULES_FIELD_CACHING_DESC"
-					default="1"
+					name="zusatzfelder"
+					type="subform"
+					label="Zusatz Felder"
+					description="Subform Field Description"
+					layout="joomla.form.field.subform.repeatable"
 					>
+					<form>
+						<fieldset name="section1">
+							<field name="note1" type="note" class="alert alert-success" label="DAY_1_NOTE" />
+							<field name="zusatzfeld1" type="text" default="Montag" label="DAY" size="10" description="DAY" />
+							<field name="zusatzfeld1_active" type="switcher"  filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="zusatzfeld1_table"
+								type="subform"
+								label="Table"
+								showon="zusatzfeld1_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="zusatzfeld1_from" type="text" default="09:00" size="10" maxlength="7" label="TIME_1_FROM" description="TIME_FORMAT_DESC" />
+									<field name="zusatzfeld1_to" type="text" default="18:00" size="10" maxlength="7" label="TIME_1_TO" description="TIME_FORMAT_DESC" />
+								</form>
+							</field>
+						</fieldset>
+						<fieldset name="section2">
+							<field name="note2" type="note" class="alert alert-success" label="DAY_1_NOTE" />
+							<field name="zusatzfeld2" type="text" default="Montag" label="DAY" size="10" description="DAY" />
+							<field name="zusatzfeld2_active" type="switcher"  filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="zusatzfeld2_table"
+								type="subform"
+								label="Table"
+								showon="zusatzfeld2_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="zusatzfeld2_from" type="text" default="09:00" size="10" maxlength="7" label="TIME_1_FROM" description="TIME_FORMAT_DESC" />
+									<field name="zusatzfeld2_to" type="text" default="18:00" size="10" maxlength="7" label="TIME_1_TO" description="TIME_FORMAT_DESC" />
+								</form>
+							</field>
+						</fieldset>
+					</form>
+				</field>
+			</fieldset>
+			
+			<fieldset name="advanced">
+				<field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+				<field name="moduleclass_sfx" type="textarea" rows="3" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
 					<option value="1">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
 				</field>
-
-				<field
-					name="cache_time"
-					type="text"
-					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
-					description="COM_MODULES_FIELD_CACHE_TIME_DESC"
-					default="900"
-				/>
-
-				<field
-					name="cachemode"
-					type="hidden"
-					default="static"
-					>
-					<option value="static"></option>
+				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field name="cachemode" type="hidden" default="itemid">
+					<option value="itemid"></option>
 				</field>
 			</fieldset>
 		</fields>

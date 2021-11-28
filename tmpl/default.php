@@ -1,23 +1,18 @@
 <?php
-/**
- * @package     Joomla.Site
- * @subpackage  mod_custom
- *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+/*
+# mod_itcs_test
+# -------------------------------------------------------------
+# Author    it-conserv.de
+# Copyright (C) 2021 it-conserv.de All Rights Reserved.
+# License - http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+# CSS Style is a free resource from http://littlesnippets.net/ 
+# Websites: it-conserv.de
+*/
 
+// no direct access
 defined('_JEXEC') or die;
-
-
 ?>
-
-<div class="module" style="background-color: #f9f9f9; border: 1px solid #a1a1a1;">
-	<div class="module_header">
-		<h3 class="">Test Modul</h3>
-		<span class="hairline"></span>
-	</div>
-	<div class="module_content">
-		<?php echo $itcs_license; ?>
-	</div>
+<div id="openhours<?php echo $uniqid ?>" class="openhours">
+	<?php echo '<div style="float: left;">'.$test.'</div>'; ?>
+	<?php echo '<div style="float: left;">'.$button.'</div>'; ?>
 </div>
